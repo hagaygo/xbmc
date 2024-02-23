@@ -548,14 +548,15 @@ void CGUIDialogSubtitles::OnDownloadComplete(const CFileItemList *items, const s
   std::vector<std::string> vecFiles;
 
   std::string strCurrentFilePath;
-  if (URIUtils::IsHTTP(strCurrentFile))
+  std::string subPath = CSpecialProtocol::TranslatePath("special://subtitles");
+
+  if (URIUtils::IsHTTP(strCurrentFile) && subPath.empty())
   {
     strCurrentFile = "TempSubtitle";
     vecFiles.push_back(strCurrentFile);
   }
   else
-  {
-    std::string subPath = CSpecialProtocol::TranslatePath("special://subtitles");
+  {    
     if (!subPath.empty())
       strDownloadPath = subPath;
 
